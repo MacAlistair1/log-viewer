@@ -18,7 +18,7 @@ A fully customizable, single-dashboard log viewer for Laravel.
   calls, zero build step**. Works out of the box; publish the assets into
   `public/` to self-host permanently with your own cache headers/CDN
 - ✅ Fully responsive (mobile → desktop), light/dark mode
-- ✅ Supports **PHP 8.1 – 8.4** and **Laravel 9 – 12**
+- ✅ Supports **PHP 8.1 – 8.4** and **Laravel 9 – 13**
 
 ## 1. Install
 
@@ -394,7 +394,7 @@ latest version of the package files.
 
 | PHP     | Laravel    |
 |---------|------------|
-| 8.1–8.4 | 9, 10, 11, 12 |
+| 8.1–8.4 | 9, 10, 11, 12, 13 |
 
 ## License
 
