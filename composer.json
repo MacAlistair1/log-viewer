@@ -1,0 +1,51 @@
+{
+    "name": "jeeven/log-viewer",
+    "description": "A fully customizable, framework-native log viewer for Laravel: Laravel logs, Apache/Nginx logs, custom app logs and database-stored logs (e.g. api_logs) in one dashboard.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "log", "log-viewer", "apache", "nginx", "logs", "database logs", "monitoring"],
+    "homepage": "https://github.com/MacAlistair1/log-viewer",
+    "authors": [
+        {
+            "name": "Jeeven Lamichhane",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2|^8.3|^8.4",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+        "illuminate/database": "^9.0|^10.0|^11.0|^12.0",
+        "illuminate/http": "^9.0|^10.0|^11.0|^12.0",
+        "illuminate/routing": "^9.0|^10.0|^11.0|^12.0",
+        "illuminate/cache": "^9.0|^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^9.0|^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jeeven\\LogViewer\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jeeven\\LogViewer\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jeeven\\LogViewer\\LogViewerServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}
