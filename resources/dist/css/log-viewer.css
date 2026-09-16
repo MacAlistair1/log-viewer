@@ -685,6 +685,11 @@
   margin-bottom: 1.25rem;
 }
 
+.lv-alert-danger {
+  background: var(--lv-danger-soft);
+  color: var(--lv-danger);
+}
+
 /* ---------- meta footer (memory / duration / version / support link) ---------- */
 .lv-meta-footer {
   position: fixed;

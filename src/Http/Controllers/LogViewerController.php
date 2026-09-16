@@ -149,7 +149,11 @@ class LogViewerController
             abort(404);
         }
 
-        $reader->clear();
+        try {
+            $reader->clear();
+        } catch (\Throwable $e) {
+            return back()->with('error', $e->getMessage());
+        }
 
         return back()->with('status', 'Log cleared successfully.');
     }

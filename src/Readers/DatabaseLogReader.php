@@ -7,9 +7,7 @@ use Jeeven\LogViewer\Contracts\LogReader;
 
 class DatabaseLogReader implements LogReader
 {
-    public function __construct(protected string $key, protected array $config)
-    {
-    }
+    public function __construct(protected string $key, protected array $config) {}
 
     protected function query()
     {
@@ -72,7 +70,7 @@ class DatabaseLogReader implements LogReader
                 'date'       => $row[$cols['created_at']] ?? null,
                 // "level" drives badge color; "level_label" is what's shown.
                 'level'      => $this->resolveLevel($rawLevel),
-                'level_label'=> $rawLevel,
+                'level_label' => $rawLevel,
                 'message'    => $row[$cols['message']] ?? null,
                 'context'    => $extra ?: null,
                 'stack'      => null,
@@ -183,6 +181,12 @@ class DatabaseLogReader implements LogReader
 
     public function clear(): bool
     {
-        return (bool) $this->query()->delete();
+        try {
+            return (bool) $this->query()->delete();
+        } catch (\Throwable $e) {
+            throw new \RuntimeException(
+                'Log Viewer: could not clear the "' . ($this->config['table'] ?? $this->key) . '" table — ' . $e->getMessage()
+            );
+        }
     }
 }

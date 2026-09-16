@@ -41,6 +41,10 @@
             <div class="lv-alert">{{ session('status') }}</div>
         @endif
 
+        @if (session('error'))
+            <div class="lv-alert lv-alert-danger">{{ session('error') }}</div>
+        @endif
+
         @yield('content')
     </main>
 

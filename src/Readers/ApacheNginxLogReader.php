@@ -70,6 +70,6 @@ class ApacheNginxLogReader extends AbstractFileReader
     {
         // Web server log files usually require elevated permissions —
         // disable clearing by default; can be overridden via config.
-        return (bool) ($this->config['allow_clear'] ?? false);
+        return (bool) ($this->config['allow_clear'] ?? false) && $this->isWritable();
     }
 }

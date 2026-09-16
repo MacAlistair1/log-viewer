@@ -159,6 +159,26 @@ abstract class AbstractFileReader implements LogReader
 
     public function supportsClear(): bool
     {
+        return $this->isWritable();
+    }
+
+    /**
+     * Whether every existing resolved file is writable by the current
+     * process. Backs supportsClear() so the "Clear log" button never even
+     * appears for files the web server user can't touch (e.g. a system log
+     * owned by another user/process). If nothing exists yet, there's
+     * nothing to protect against clearing, so this is true.
+     */
+    protected function isWritable(): bool
+    {
+        $paths = array_filter($this->resolvePaths(), 'is_file');
+
+        foreach ($paths as $path) {
+            if (!is_writable($path)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -183,13 +203,31 @@ abstract class AbstractFileReader implements LogReader
 
     public function clear(): bool
     {
-        $ok = true;
+        $failed = [];
+
         foreach ($this->resolvePaths() as $path) {
-            if (is_file($path)) {
-                file_put_contents($path, '');
+            if (!is_file($path)) {
+                continue;
+            }
+
+            // Checked up front (clearer message) AND suppressed on the
+            // call itself (in case permissions changed since the page
+            // loaded, or on filesystems where is_writable() lies) — either
+            // way we never let a raw PHP warning bubble up as a fatal
+            // ErrorException.
+            if (!is_writable($path) || @file_put_contents($path, '') === false) {
+                $failed[] = basename($path);
             }
         }
-        return $ok;
+
+        if ($failed) {
+            throw new \RuntimeException(
+                'Log Viewer: could not clear ' . implode(', ', $failed) .
+                    ' — permission denied. Check the file\'s ownership/permissions on the server.'
+            );
+        }
+
+        return true;
     }
 
     protected function humanSize(int $bytes): string
